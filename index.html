@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BitForge</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="controls">
+        <button id="theme-toggle" class="control-btn" title="Cambiar tema">
+            <i class="fas fa-moon"></i>
+        </button>
+        <select id="language-selector" class="control-btn">
+            <option value="en">English</option>
+            <option value="es" selected>Español</option>
+            <option value="ru">Русский</option>
+            <option value="pt">Português</option>
+        </select>
+    </div>
+
+    <header>
+        <div class="container">
+            <h1>BitForge</h1>
+            <p>Explora y descarga mis proyectos más recientes</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#projects">Proyectos</a></li>
+                <li><a href="#social">Redes Sociales</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section id="projects" class="section">
+            <h2>Mis Proyectos</h2>
+            <div class="projects-grid" id="projects-container">
+                <!-- Los proyectos se cargarán dinámicamente con JavaScript -->
+            </div>
+        </section>
+
+        <section id="social" class="section">
+            <h2>Redes Sociales</h2>
+            <div class="social-links">
+                <a href="https://www.youtube.com/@Edward-e2o5h" target="_blank" rel="noopener noreferrer" class="social-btn youtube">
+                    <i class="fab fa-youtube"></i> YouTube
+                </a>
+                <a href="https://tiktok.com/@question.mark563" target="_blank" rel="noopener noreferrer" class="social-btn tiktok">
+                    <i class="fab fa-tiktok"></i> TikTok
+                </a>
+                <a href="https://github.com/Edward-e2o5h" target="_blank" rel="noopener noreferrer" class="social-btn github">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
