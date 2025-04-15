@@ -10,13 +10,30 @@ document.addEventListener('DOMContentLoaded', function() {
                 pt: "ZeroLag MC"
             },
             description: {
-                en: "Optimize classic Minecraft by improving performance, reducing lag, and increasing FPS with lightweight configurations and technical tweaks — all without losing the original feel of the game.",
-                es: "Optimiza Minecraft clásico mejorando el rendimiento, reduciendo el lag y aumentando los FPS con configuraciones ligeras y ajustes técnicos, sin perder la esencia del juego original.",
+                en: "Optimize Minecraft by improving performance, reducing lag, and increasing FPS with lightweight configurations and technical tweaks — all without losing the original feel of the game.",
+                es: "Optimiza Minecraft mejorando el rendimiento, reduciendo el lag y aumentando los FPS con configuraciones ligeras y ajustes técnicos, sin perder la esencia del juego original.",
                 ru: "Оптимизируй классический Minecraft, улучшая производительность, снижая лаги и повышая FPS с помощью лёгких настроек и технических правок, сохраняя оригинальную атмосферу игры.",
-                pt: "Otimize o Minecraft clássico melhorando o desempenho, reduzindo o lag e aumentando os FPS com configurações leves e ajustes técnicos — sem perder a essência original do jogo."
+                pt: "Otimize o Minecraft melhorando o desempenho, reduzindo o lag e aumentando os FPS com configurações leves e ajustes técnicos — sem perder a essência original do jogo."
             },
             image: "https://raw.githubusercontent.com/BitForge2/BitForge2.github.io/refs/heads/main/imagen/minecraft_zerolag.avif",
             downloadLink: "https://github.com/Edward-e2o5h/ZeroLag-MC"
+        },
+		{
+            id: 2,
+            title: {
+                en: "Minecraft Bedrock 1.21.72",
+                es: "Minecraft Bedrock 1.21.72",
+                ru: "Minecraft Bedrock 1.21.72",
+                pt: "Minecraft Bedrock 1.21.72"
+            },
+            description: {
+                en: "The smoothest and most cross-platform version of Minecraft. Runs like butter on console, mobile, PC and more. Build, survive, and explore on public servers or with friends, no matter the device.",
+                es: "La versión más fluida y multiplataforma de Minecraft. Corre como mantequilla en consola, móvil, PC y más. Construye, sobrevive y explora en servidores públicos o con amigos sin importar el dispositivo.",
+                ru: "Самая плавная и кроссплатформенная версия Minecraft. Работает как по маслу на консолях, мобильных устройствах, ПК и не только. Строй, выживай и исследуй на публичных серверах или с друзьями, независимо от устройства.",
+                pt: "A versão mais fluida e multiplataforma do Minecraft. Roda como manteiga no console, celular, PC e muito mais. Construa, sobreviva e explore em servidores públicos ou com amigos, independentemente do dispositivo."
+            },
+            image: "https://raw.githubusercontent.com/BitForge2/BitForge2.github.io/refs/heads/main/imagen/minecraft_bedrock.avif",
+            downloadLink: "https://www.mediafire.com/file/xwny13gm0ic7ygw/Minecraft_1.21.72.apk/file"
         }
 	]
 

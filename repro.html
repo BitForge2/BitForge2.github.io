@@ -163,7 +163,7 @@ return decodeURIComponent(results[2].replace(/\+/g, ' '));
 
 var getURL = getParameterByName('get');
 if (getURL) {
-document.getElementById('embedded-iframe').src = 'https://bitforge2.github.io/host/otro/player.html#' + getURL;
+document.getElementById('embedded-iframe').src = `https://bitforge2.github.io/host/otro/player.html#${getURL}`;
 } else {
 document.getElementById('embedded-iframe').src = 'https://bitforge2.github.io/host/otro/player.html';
 }
