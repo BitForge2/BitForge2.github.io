@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 pt: "Crie mundos, construa civilizações ou destrua tudo com meteoros, zumbis e bombas nucleares. Você manda. Você decide. Seja um deus no seu celular!"
             },
             image: "https://github.com/BitForge2/BitForge2.github.io/raw/refs/heads/main/imagen/worldbox.avif",
-            downloadLink: "https://www.mediafire.com/file/nj6keqgdfdxj6uw/MCPreview.apk/file"
+            downloadLink: "https://www.mediafire.com/file/m1qz3zzdsdpyt4i/WorldBox.apk/file"
         },
 		{
             id: 6,
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 pt: "Construa seus próprios foguetes, lance-os ao espaço e explore o sistema solar com física real! Projete. Lance. Descubra. O universo está no seu bolso!"
             },
             image: "https://github.com/BitForge2/BitForge2.github.io/raw/refs/heads/main/imagen/spaceflight.avif",
-            downloadLink: "https://www.mediafire.com/file/nj6keqgdfdxj6uw/MCPreview.apk/file"
+            downloadLink: "https://www.mediafire.com/file/gg4nxfbxpp24y56/Spaceflight_Simulator.apk/file"
         }
 	];
 
