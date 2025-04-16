@@ -10,10 +10,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 pt: "ZeroLag MC"
             },
             description: {
-                en: "Optimize Minecraft by improving performance, reducing lag, and increasing FPS with lightweight configurations and technical tweaks — all without losing the original feel of the game.",
-                es: "Optimiza Minecraft mejorando el rendimiento, reduciendo el lag y aumentando los FPS con configuraciones ligeras y ajustes técnicos, sin perder la esencia del juego original.",
-                ru: "Оптимизируй классический Minecraft, улучшая производительность, снижая лаги и повышая FPS с помощью лёгких настроек и технических правок, сохраняя оригинальную атмосферу игры.",
-                pt: "Otimize o Minecraft melhorando o desempenho, reduzindo o lag e aumentando os FPS com configurações leves e ajustes técnicos — sem perder a essência original do jogo."
+                en: "Optimize Minecraft Java Edition by improving performance, reducing lag, and increasing FPS with lightweight configurations and technical tweaks — all without losing the original feel of the game.",
+                es: "Optimiza Minecraft Java Edition mejorando el rendimiento, reduciendo el lag y aumentando los FPS con configuraciones ligeras y ajustes técnicos, sin perder la esencia del juego original.",
+                ru: "Оптимизируй классический Minecraft Java Edition, улучшая производительность, снижая лаги и повышая FPS с помощью лёгких настроек и технических правок, сохраняя оригинальную атмосферу игры.",
+                pt: "Otimize o Minecraft Java Edition melhorando o desempenho, reduzindo o lag e aumentando os FPS com configurações leves e ajustes técnicos — sem perder a essência original do jogo."
             },
             image: "https://raw.githubusercontent.com/BitForge2/BitForge2.github.io/refs/heads/main/imagen/minecraft_zerolag.avif",
             downloadLink: "https://github.com/Edward-e2o5h/ZeroLag-MC"
@@ -51,6 +51,23 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             image: "https://github.com/BitForge2/BitForge2.github.io/raw/refs/heads/main/imagen/optisupermium.avif",
             downloadLink: "https://www.mediafire.com/file/twxzfjriqgcqx40/OptiSupermium.rar/file"
+        },
+		{
+            id: 4,
+            title: {
+                en: "Minecraft Beta 1.21.80.25",
+                es: "Minecraft Beta 1.21.80.25",
+                ru: "Minecraft Beta 1.21.80.25",
+                pt: "Minecraft Beta 1.21.80.25"
+            },
+            description: {
+                en: "Minecraft Beta/Preview 1.21.80.25 brings new improvements for the upcoming 1.21 update. Bugs have been fixed, performance enhanced, and new features are being fine-tuned. Perfect for players who want to test new content ahead of time.",
+                es: "Minecraft Beta/Preview 1.21.80.25 trae nuevas mejoras para la actualización 1.21. Se han corregido errores, mejorado el rendimiento y se siguen afinando detalles de las pruebas del nuevo contenido. Ideal para jugadores que quieren probar lo nuevo antes de tiempo.",
+                ru: "Minecraft Beta/Preview 1.21.80.25 приносит улучшения для будущего обновления 1.21. Исправлены ошибки, улучшена производительность и тестируется новый контент. Отличный выбор для тех, кто хочет попробовать всё заранее.",
+                pt: "Minecraft Beta/Preview 1.21.80.25 traz melhorias para a futura atualização 1.21. Erros foram corrigidos, o desempenho melhorado e os novos recursos estão sendo ajustados. Ideal para quem quer testar as novidades antes da hora."
+            },
+            image: "https://github.com/BitForge2/BitForge2.github.io/raw/refs/heads/main/imagen/MinecraftBeta.avif",
+            downloadLink: "https://www.mediafire.com/file/nj6keqgdfdxj6uw/MCPreview.apk/file"
         }
 	]
 
