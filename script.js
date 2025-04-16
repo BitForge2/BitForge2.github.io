@@ -68,8 +68,42 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             image: "https://github.com/BitForge2/BitForge2.github.io/raw/refs/heads/main/imagen/MinecraftBeta.avif",
             downloadLink: "https://www.mediafire.com/file/nj6keqgdfdxj6uw/MCPreview.apk/file"
+        },
+		{
+            id: 5,
+            title: {
+                en: "WorldBox Premium (Mobile)",
+                es: "WorldBox Premium (para Móvil)",
+                ru: "WorldBox Премиум (на мобилке)",
+                pt: "WorldBox Premium (para Celular)"
+            },
+            description: {
+                en: "Create worlds, build civilizations, or destroy everything with meteors, zombies, and nukes. You rule. You decide. Be a god on your phone!",
+                es: "Crea mundos, construye civilizaciones o destrúyelo todo con meteoritos, zombis y bombas nucleares. Tú mandas. Tú decides. ¡Juega a ser Dios desde tu móvil!",
+                ru: "Создавай миры, развивай цивилизации или уничтожай всё метеоритами, зомби и ядерными бомбами. Ты правишь. Ты решаешь. Будь богом прямо на телефоне!",
+                pt: "Crie mundos, construa civilizações ou destrua tudo com meteoros, zumbis e bombas nucleares. Você manda. Você decide. Seja um deus no seu celular!"
+            },
+            image: "https://github.com/BitForge2/BitForge2.github.io/raw/refs/heads/main/imagen/worldbox.avif",
+            downloadLink: "https://www.mediafire.com/file/nj6keqgdfdxj6uw/MCPreview.apk/file"
+        },
+		{
+            id: 6,
+            title: {
+                en: "SpaceFlight Simulator (Mobile)",
+                es: "SpaceFlight Simulator (para Móvil)",
+                ru: "Симулятор Космических Полётов (на мобилке)",
+                pt: "SpaceFlight Simulator (para Celular)"
+            },
+            description: {
+                en: "Build your own rockets, launch into space, and explore the solar system with real physics! Design. Launch. Discover. The universe is in your pocket!",
+                es: "Construye tus propios cohetes, lánzalos al espacio y explora el sistema solar con física realista. Diseña. Lanza. Descubre. ¡El universo está en tu bolsillo!",
+                ru: "Строй ракеты, запускай их в космос и исследуй Солнечную систему с реалистичной физикой! Проектируй. Запускай. Исследуй. Вселенная у тебя в кармане!",
+                pt: "Construa seus próprios foguetes, lance-os ao espaço e explore o sistema solar com física real! Projete. Lance. Descubra. O universo está no seu bolso!"
+            },
+            image: "https://github.com/BitForge2/BitForge2.github.io/raw/refs/heads/main/imagen/spaceflight.avif",
+            downloadLink: "https://www.mediafire.com/file/nj6keqgdfdxj6uw/MCPreview.apk/file"
         }
-	]
+	];
 
     // Textos traducibles
     const translations = {
