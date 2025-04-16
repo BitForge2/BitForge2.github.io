@@ -34,6 +34,23 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             image: "https://raw.githubusercontent.com/BitForge2/BitForge2.github.io/refs/heads/main/imagen/minecraft_bedrock.avif",
             downloadLink: "https://www.mediafire.com/file/xwny13gm0ic7ygw/Minecraft_1.21.72.apk/file"
+        },
+		{
+            id: 3,
+            title: {
+                en: "OptiSupermium 132",
+                es: "OptiSupermium 132",
+                ru: "OptiSupermium 132",
+                pt: "OptiSupermium 132"
+            },
+            description: {
+                en: "Supermium is a Chromium-based browser, lightweight and fast, ideal for older computers. It works on Windows 7, XP, and newer versions. It offers great compatibility, optimization, and is fully portable.",
+                es: "Supermium es un navegador basado en Chromium, ligero y rápido, ideal para computadoras antiguas. Funciona en Windows 7, XP y versiones más nuevas. Ofrece buena compatibilidad, optimización y es totalmente portable.",
+                ru: "Supermium — это быстрый и лёгкий браузер на базе Chromium, идеально подходящий для старых компьютеров. Работает на Windows 7, XP и новых версиях. Обеспечивает хорошую совместимость, оптимизацию и полностью портативен.",
+                pt: "Supermium é um navegador leve e rápido baseado no Chromium, ideal para computadores antigos. Funciona no Windows 7, XP e versões mais recentes. Oferece boa compatibilidade, otimização e é totalmente portátil."
+            },
+            image: "https://github.com/BitForge2/BitForge2.github.io/raw/refs/heads/main/imagen/optisupermium.avif",
+            downloadLink: "https://www.mediafire.com/file/twxzfjriqgcqx40/OptiSupermium.rar/file"
         }
 	]
 
