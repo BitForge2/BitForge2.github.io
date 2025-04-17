@@ -102,6 +102,23 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             image: "https://github.com/BitForge2/BitForge2.github.io/raw/refs/heads/main/imagen/spaceflight.avif",
             downloadLink: "https://www.mediafire.com/file/gg4nxfbxpp24y56/Spaceflight_Simulator.apk/file"
+        },
+		{
+            id: 7,
+            title: {
+                en: "Stellarium Plus (Mobile)",
+                es: "Stellarium Plus (para Móvil)",
+                ru: "Симулятор Космических Полётов (на мобилке)",
+                pt: "SpaceFlight Simulator (para Celular)"
+            },
+            description: {
+                en: "Stellarium Plus is a premium mobile planetarium app that lets you explore stars, planets, and constellations in real time with amazing detail and accuracy.",
+                es: "Stellarium Plus es una app planetario premium para móviles que te permite explorar estrellas, planetas y constelaciones en tiempo real con gran detalle y precisión.",
+                ru: "Stellarium Plus — это премиум-приложение-планетарий для мобильных устройств, позволяющее в реальном времени изучать звёзды, планеты и созвездия с потрясающей точностью и детализацией.",
+                pt: "Stellarium Plus é um aplicativo de planetário premium para celular que permite explorar estrelas, planetas e constelações em tempo real com detalhes e precisão incríveis."
+            },
+            image: "https://stellarium.org/img/slideshow/slide-3.jpg",
+            downloadLink: "https://www.mediafire.com/file/iw2wi7l5wm06ioa/Stellarium_%252B.apk/file"
         }
 	];
 
