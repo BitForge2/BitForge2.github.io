@@ -61,8 +61,8 @@ const projects = [
 	{
         id: 2,
         title: {
-			en: "Minecraft Bedrock 1.21.72",
-            es: "Minecraft Bedrock 1.21.72"
+			en: "Minecraft Bedrock 1.21.72 (Mobile)",
+            es: "Minecraft Bedrock 1.21.72 (para Móvil)"
         },
 		description: {
 			en: "The smoothest and most cross-platform version of Minecraft. Runs like butter on console, mobile, PC and more. Build, survive, and explore on public servers or with friends, no matter the device.",
@@ -74,8 +74,8 @@ const projects = [
 	{
         id: 3,
 		title: {
-            en: "OptiSupermium 132",
-            es: "OptiSupermium 132"
+            en: "OptiSupermium 132 (PC)",
+            es: "OptiSupermium 132 (para PC)"
         },
         description: {
             en: "Supermium is a Chromium-based browser, lightweight and fast, ideal for older computers. It works on Windows 7, XP, and newer versions. It offers great compatibility, optimization, and is fully portable.",
@@ -87,8 +87,8 @@ const projects = [
 	{
 		id: 4,
         title: {
-			en: "Minecraft Beta 1.21.80.25",
-            es: "Minecraft Beta 1.21.80.25"
+			en: "Minecraft Beta 1.21.80.25 (Mobile)",
+            es: "Minecraft Beta 1.21.80.25 (para Móvil)"
         },
         description: {
             en: "Minecraft Beta/Preview 1.21.80.25 brings new improvements for the upcoming 1.21 update. Bugs have been fixed, performance enhanced, and new features are being fine-tuned. Perfect for players who want to test new content ahead of time.",
@@ -135,7 +135,33 @@ const projects = [
         },
         image: "https://stellarium.org/img/slideshow/slide-3.jpg",
         downloadLink: "https://www.mediafire.com/file/iw2wi7l5wm06ioa/Stellarium_%252B.apk/file"
-    }		
+    },
+	{
+        id: 8,
+		title: {
+            en: "Unturned 3.9.9.5 (PC)",
+            es: "Unturned 3.9.9.5 (para PC)"
+        },
+        description: {
+            en: "Unturned is a survival game in a post-apocalyptic world where you face zombies, manage resources, and build shelters. In version 3.9.9.5, it offers a sandbox experience where you can explore, gather, and improve your survival skills. Despite its simple graphics, the game has deep, strategic gameplay. It includes improvements in optimization and balance for a better experience.",
+            es: "Unturned es un juego de supervivencia en un mundo post-apocalíptico en el que debes enfrentar zombis, gestionar recursos y construir refugios. En la versión 3.9.9.5, ofrece una experiencia sandbox donde puedes explorar, recolectar y mejorar tus habilidades para sobrevivir. A pesar de sus gráficos simples, el juego tiene una jugabilidad profunda y estratégica. Incluye mejoras en optimización y balance para ofrecer una mejor experiencia."
+        },
+        image: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/304930/capsule_616x353.jpg?t=1734630748",
+        downloadLink: "https://www.mediafire.com/file/tzzooncdh82djgw/Unturned_3.9.9.5.7z/file"
+    },
+	{
+        id: 9,
+		title: {
+            en: "Papers Please 1.1.65 (PC)",
+            es: "Papers Please 1.1.65 (para PC)"
+        },
+        description: {
+            en: "Papers, Please is a simulation game where you work as an immigration officer in the fictional country of Arstotzka. Your job is to inspect documents, catch inconsistencies, and decide who can enter and who must be turned away. Every choice affects your pay, your family… and the fate of many lives.",
+            es: "Papers, Please es un juego de simulación en el que trabajas como inspector de inmigración en un país ficticio llamado Arstotzka. Tu tarea es revisar documentos, detectar inconsistencias y decidir quién puede entrar y quién debe ser rechazado. Cada decisión impacta tu salario, tu familia... y el destino de muchas vidas."
+        },
+        image: "https://games-b26f.kxcdn.com/wp-content/uploads/2018/02/PapersPlease.jpg",
+        downloadLink: "https://www.mediafire.com/file/jyymgpoic1dfebt/PapersPlease.rar/file"
+    }
 ];
 
 // Servidores de descarga
