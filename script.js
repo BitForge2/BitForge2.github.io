@@ -1,297 +1,632 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Datos de proyectos con soporte multiidioma
-    const projects = [
+/**
+ * BitForge - Aplicación de proyectos y descargas
+ * Versión optimizada con mejoras de rendimiento, manejo de errores y nuevas características
+ */
+
+// Constantes de configuración
+const CONFIG = {
+    DEFAULT_LANGUAGE: 'es',
+    THEME_KEY: 'bitforge-theme',
+    LANGUAGE_KEY: 'bitforge-language',
+    PROJECTS_PER_PAGE: 6,
+    DEBOUNCE_DELAY: 300
+};
+
+// Estado global de la aplicación
+const state = {
+    language: CONFIG.DEFAULT_LANGUAGE,
+    darkMode: false,
+    activeTag: null,
+    searchQuery: '',
+    currentPage: 1,
+    isLoading: false
+};
+
+// Cache de elementos DOM
+const DOM = {
+    themeToggle: document.getElementById('theme-toggle'),
+    themeIcon: document.querySelector('#theme-toggle i'),
+    languageSelector: document.getElementById('language-selector'),
+    projectsContainer: document.getElementById('projects-container'),
+    headerTitle: document.querySelector('header h1'),
+    headerSubtitle: document.querySelector('header p'),
+    projectsTitle: document.querySelector('#projects h2'),
+    socialTitle: document.querySelector('#social h2'),
+    navLinks: document.querySelectorAll('nav a'),
+    searchInput: document.getElementById('search-input'),
+    tagContainer: document.getElementById('tag-container'),
+    downloadModal: document.getElementById('download-modal'),
+    movieModal: document.getElementById('movie-modal'),
+    loadingScreen: document.getElementById('loading-screen'),
+    toastContainer: document.getElementById('toast-container'),
+    movieBtn: document.getElementById('minecraft-movie-btn')
+};
+
+// Datos de proyectos (simplificado para el ejemplo)
+const projects = [
+    {
+        id: 1,
+        title: {
+            en: "Minecraft Java Edition 1.12.2 (PC)",
+            es: "Minecraft Java Edition 1.12.2 (para PC)"
+        },
+        description: {
+            en: "Optimize Minecraft Java Edition by improving performance, reducing lag, and increasing FPS.",
+            es: "Optimiza Minecraft Java Edition mejorando el rendimiento y reduciendo el lag."
+        },
+        image: "https://raw.githubusercontent.com/BitForge2/BitForge2.github.io/main/imagen/minecraft_zerolag.avif",
+        downloadLink: "https://github.com/Edward-e2o5h/ZeroLag-MC",
+        tags: ["minecraft", "pc", "java"]
+    },
+	{
+        id: 2,
+        title: {
+			en: "Minecraft Bedrock 1.21.72",
+            es: "Minecraft Bedrock 1.21.72"
+        },
+		description: {
+			en: "The smoothest and most cross-platform version of Minecraft. Runs like butter on console, mobile, PC and more. Build, survive, and explore on public servers or with friends, no matter the device.",
+			es: "La versión más fluida y multiplataforma de Minecraft. Corre como mantequilla en consola, móvil, PC y más. Construye, sobrevive y explora en servidores públicos o con amigos sin importar el dispositivo."
+		},
+        image: "https://raw.githubusercontent.com/BitForge2/BitForge2.github.io/refs/heads/main/imagen/minecraft_bedrock.avif",
+        downloadLink: "https://www.mediafire.com/file/xwny13gm0ic7ygw/Minecraft_1.21.72.apk/file"
+    },
+	{
+        id: 3,
+		title: {
+            en: "OptiSupermium 132",
+            es: "OptiSupermium 132"
+        },
+        description: {
+            en: "Supermium is a Chromium-based browser, lightweight and fast, ideal for older computers. It works on Windows 7, XP, and newer versions. It offers great compatibility, optimization, and is fully portable.",
+            es: "Supermium es un navegador basado en Chromium, ligero y rápido, ideal para computadoras antiguas. Funciona en Windows 7, XP y versiones más nuevas. Ofrece buena compatibilidad, optimización y es totalmente portable."
+		},
+        image: "https://github.com/BitForge2/BitForge2.github.io/raw/refs/heads/main/imagen/optisupermium.avif",
+        downloadLink: "https://www.mediafire.com/file/twxzfjriqgcqx40/OptiSupermium.rar/file"
+    },
+	{
+		id: 4,
+        title: {
+			en: "Minecraft Beta 1.21.80.25",
+            es: "Minecraft Beta 1.21.80.25"
+        },
+        description: {
+            en: "Minecraft Beta/Preview 1.21.80.25 brings new improvements for the upcoming 1.21 update. Bugs have been fixed, performance enhanced, and new features are being fine-tuned. Perfect for players who want to test new content ahead of time.",
+			es: "Minecraft Beta/Preview 1.21.80.25 trae nuevas mejoras para la actualización 1.21. Se han corregido errores, mejorado el rendimiento y se siguen afinando detalles de las pruebas del nuevo contenido. Ideal para jugadores que quieren probar lo nuevo antes de tiempo."   
+		},
+        image: "https://github.com/BitForge2/BitForge2.github.io/raw/refs/heads/main/imagen/MinecraftBeta.avif",
+		downloadLink: "https://www.mediafire.com/file/nj6keqgdfdxj6uw/MCPreview.apk/file"
+    },
+	{
+        id: 5,
+        title: {
+            en: "WorldBox Premium (Mobile)",
+			es: "WorldBox Premium (para Móvil)"
+		},
+        description: {
+			en: "Create worlds, build civilizations, or destroy everything with meteors, zombies, and nukes. You rule. You decide. Be a god on your phone!",
+            es: "Crea mundos, construye civilizaciones o destrúyelo todo con meteoritos, zombis y bombas nucleares. Tú mandas. Tú decides. ¡Juega a ser Dios desde tu móvil!"
+        },
+        image: "https://github.com/BitForge2/BitForge2.github.io/raw/refs/heads/main/imagen/worldbox.avif",
+        downloadLink: "https://www.mediafire.com/file/m1qz3zzdsdpyt4i/WorldBox.apk/file"
+    },
+	{
+        id: 6,
+        title: {
+            en: "SpaceFlight Simulator (Mobile)",
+            es: "SpaceFlight Simulator (para Móvil)"
+        },
+        description: {
+            en: "Build your own rockets, launch into space, and explore the solar system with real physics! Design. Launch. Discover. The universe is in your pocket!",
+            es: "Construye tus propios cohetes, lánzalos al espacio y explora el sistema solar con física realista. Diseña. Lanza. Descubre. ¡El universo está en tu bolsillo!"
+        },
+        image: "https://github.com/BitForge2/BitForge2.github.io/raw/refs/heads/main/imagen/spaceflight.avif",
+        downloadLink: "https://www.mediafire.com/file/gg4nxfbxpp24y56/Spaceflight_Simulator.apk/file"
+    },
+	{
+        id: 7,
+		title: {
+            en: "Stellarium Plus (Mobile)",
+            es: "Stellarium Plus (para Móvil)"
+        },
+        description: {
+            en: "Stellarium Plus is a premium mobile planetarium app that lets you explore stars, planets, and constellations in real time with amazing detail and accuracy.",
+            es: "Stellarium Plus es una app planetario premium para móviles que te permite explorar estrellas, planetas y constelaciones en tiempo real con gran detalle y precisión."
+        },
+        image: "https://stellarium.org/img/slideshow/slide-3.jpg",
+        downloadLink: "https://www.mediafire.com/file/iw2wi7l5wm06ioa/Stellarium_%252B.apk/file"
+    }		
+];
+
+// Servidores de descarga
+const downloadServers = {
+    "WorldBox Premium (Mobile)": [
         {
-            id: 1,
-            title: {
-                en: "ZeroLag MC",
-                es: "ZeroLag MC",
-                ru: "ZeroLag MC",
-                pt: "ZeroLag MC"
-            },
-            description: {
-                en: "Optimize Minecraft Java Edition by improving performance, reducing lag, and increasing FPS with lightweight configurations and technical tweaks — all without losing the original feel of the game.",
-                es: "Optimiza Minecraft Java Edition mejorando el rendimiento, reduciendo el lag y aumentando los FPS con configuraciones ligeras y ajustes técnicos, sin perder la esencia del juego original.",
-                ru: "Оптимизируй классический Minecraft Java Edition, улучшая производительность, снижая лаги и повышая FPS с помощью лёгких настроек и технических правок, сохраняя оригинальную атмосферу игры.",
-                pt: "Otimize o Minecraft Java Edition melhorando o desempenho, reduzindo o lag e aumentando os FPS com configurações leves e ajustes técnicos — sem perder a essência original do jogo."
-            },
-            image: "https://raw.githubusercontent.com/BitForge2/BitForge2.github.io/refs/heads/main/imagen/minecraft_zerolag.avif",
-            downloadLink: "https://github.com/Edward-e2o5h/ZeroLag-MC"
+            name: "GoFile",
+            url: "https://gofile.io/d/Ult1Et",
+            icon: "fab fa-gofile",
+            description: "Descarga Alternativa"
         },
-		{
-            id: 2,
-            title: {
-                en: "Minecraft Bedrock 1.21.72",
-                es: "Minecraft Bedrock 1.21.72",
-                ru: "Minecraft Bedrock 1.21.72",
-                pt: "Minecraft Bedrock 1.21.72"
-            },
-            description: {
-                en: "The smoothest and most cross-platform version of Minecraft. Runs like butter on console, mobile, PC and more. Build, survive, and explore on public servers or with friends, no matter the device.",
-                es: "La versión más fluida y multiplataforma de Minecraft. Corre como mantequilla en consola, móvil, PC y más. Construye, sobrevive y explora en servidores públicos o con amigos sin importar el dispositivo.",
-                ru: "Самая плавная и кроссплатформенная версия Minecraft. Работает как по маслу на консолях, мобильных устройствах, ПК и не только. Строй, выживай и исследуй на публичных серверах или с друзьями, независимо от устройства.",
-                pt: "A versão mais fluida e multiplataforma do Minecraft. Roda como manteiga no console, celular, PC e muito mais. Construa, sobreviva e explore em servidores públicos ou com amigos, independentemente do dispositivo."
-            },
-            image: "https://raw.githubusercontent.com/BitForge2/BitForge2.github.io/refs/heads/main/imagen/minecraft_bedrock.avif",
-            downloadLink: "https://www.mediafire.com/file/xwny13gm0ic7ygw/Minecraft_1.21.72.apk/file"
-        },
-		{
-            id: 3,
-            title: {
-                en: "OptiSupermium 132",
-                es: "OptiSupermium 132",
-                ru: "OptiSupermium 132",
-                pt: "OptiSupermium 132"
-            },
-            description: {
-                en: "Supermium is a Chromium-based browser, lightweight and fast, ideal for older computers. It works on Windows 7, XP, and newer versions. It offers great compatibility, optimization, and is fully portable.",
-                es: "Supermium es un navegador basado en Chromium, ligero y rápido, ideal para computadoras antiguas. Funciona en Windows 7, XP y versiones más nuevas. Ofrece buena compatibilidad, optimización y es totalmente portable.",
-                ru: "Supermium — это быстрый и лёгкий браузер на базе Chromium, идеально подходящий для старых компьютеров. Работает на Windows 7, XP и новых версиях. Обеспечивает хорошую совместимость, оптимизацию и полностью портативен.",
-                pt: "Supermium é um navegador leve e rápido baseado no Chromium, ideal para computadores antigos. Funciona no Windows 7, XP e versões mais recentes. Oferece boa compatibilidade, otimização e é totalmente portátil."
-            },
-            image: "https://github.com/BitForge2/BitForge2.github.io/raw/refs/heads/main/imagen/optisupermium.avif",
-            downloadLink: "https://www.mediafire.com/file/twxzfjriqgcqx40/OptiSupermium.rar/file"
-        },
-		{
-            id: 4,
-            title: {
-                en: "Minecraft Beta 1.21.80.25",
-                es: "Minecraft Beta 1.21.80.25",
-                ru: "Minecraft Beta 1.21.80.25",
-                pt: "Minecraft Beta 1.21.80.25"
-            },
-            description: {
-                en: "Minecraft Beta/Preview 1.21.80.25 brings new improvements for the upcoming 1.21 update. Bugs have been fixed, performance enhanced, and new features are being fine-tuned. Perfect for players who want to test new content ahead of time.",
-                es: "Minecraft Beta/Preview 1.21.80.25 trae nuevas mejoras para la actualización 1.21. Se han corregido errores, mejorado el rendimiento y se siguen afinando detalles de las pruebas del nuevo contenido. Ideal para jugadores que quieren probar lo nuevo antes de tiempo.",
-                ru: "Minecraft Beta/Preview 1.21.80.25 приносит улучшения для будущего обновления 1.21. Исправлены ошибки, улучшена производительность и тестируется новый контент. Отличный выбор для тех, кто хочет попробовать всё заранее.",
-                pt: "Minecraft Beta/Preview 1.21.80.25 traz melhorias para a futura atualização 1.21. Erros foram corrigidos, o desempenho melhorado e os novos recursos estão sendo ajustados. Ideal para quem quer testar as novidades antes da hora."
-            },
-            image: "https://github.com/BitForge2/BitForge2.github.io/raw/refs/heads/main/imagen/MinecraftBeta.avif",
-            downloadLink: "https://www.mediafire.com/file/nj6keqgdfdxj6uw/MCPreview.apk/file"
-        },
-		{
-            id: 5,
-            title: {
-                en: "WorldBox Premium (Mobile)",
-                es: "WorldBox Premium (para Móvil)",
-                ru: "WorldBox Премиум (на мобилке)",
-                pt: "WorldBox Premium (para Celular)"
-            },
-            description: {
-                en: "Create worlds, build civilizations, or destroy everything with meteors, zombies, and nukes. You rule. You decide. Be a god on your phone!",
-                es: "Crea mundos, construye civilizaciones o destrúyelo todo con meteoritos, zombis y bombas nucleares. Tú mandas. Tú decides. ¡Juega a ser Dios desde tu móvil!",
-                ru: "Создавай миры, развивай цивилизации или уничтожай всё метеоритами, зомби и ядерными бомбами. Ты правишь. Ты решаешь. Будь богом прямо на телефоне!",
-                pt: "Crie mundos, construa civilizações ou destrua tudo com meteoros, zumbis e bombas nucleares. Você manda. Você decide. Seja um deus no seu celular!"
-            },
-            image: "https://github.com/BitForge2/BitForge2.github.io/raw/refs/heads/main/imagen/worldbox.avif",
-            downloadLink: "https://www.mediafire.com/file/m1qz3zzdsdpyt4i/WorldBox.apk/file"
-        },
-		{
-            id: 6,
-            title: {
-                en: "SpaceFlight Simulator (Mobile)",
-                es: "SpaceFlight Simulator (para Móvil)",
-                ru: "Симулятор Космических Полётов (на мобилке)",
-                pt: "SpaceFlight Simulator (para Celular)"
-            },
-            description: {
-                en: "Build your own rockets, launch into space, and explore the solar system with real physics! Design. Launch. Discover. The universe is in your pocket!",
-                es: "Construye tus propios cohetes, lánzalos al espacio y explora el sistema solar con física realista. Diseña. Lanza. Descubre. ¡El universo está en tu bolsillo!",
-                ru: "Строй ракеты, запускай их в космос и исследуй Солнечную систему с реалистичной физикой! Проектируй. Запускай. Исследуй. Вселенная у тебя в кармане!",
-                pt: "Construa seus próprios foguetes, lance-os ao espaço e explore o sistema solar com física real! Projete. Lance. Descubra. O universo está no seu bolso!"
-            },
-            image: "https://github.com/BitForge2/BitForge2.github.io/raw/refs/heads/main/imagen/spaceflight.avif",
-            downloadLink: "https://www.mediafire.com/file/gg4nxfbxpp24y56/Spaceflight_Simulator.apk/file"
-        },
-		{
-            id: 7,
-            title: {
-                en: "Stellarium Plus (Mobile)",
-                es: "Stellarium Plus (para Móvil)",
-                ru: "Симулятор Космических Полётов (на мобилке)",
-                pt: "SpaceFlight Simulator (para Celular)"
-            },
-            description: {
-                en: "Stellarium Plus is a premium mobile planetarium app that lets you explore stars, planets, and constellations in real time with amazing detail and accuracy.",
-                es: "Stellarium Plus es una app planetario premium para móviles que te permite explorar estrellas, planetas y constelaciones en tiempo real con gran detalle y precisión.",
-                ru: "Stellarium Plus — это премиум-приложение-планетарий для мобильных устройств, позволяющее в реальном времени изучать звёзды, планеты и созвездия с потрясающей точностью и детализацией.",
-                pt: "Stellarium Plus é um aplicativo de planetário premium para celular que permite explorar estrelas, planetas e constelações em tempo real com detalhes e precisão incríveis."
-            },
-            image: "https://stellarium.org/img/slideshow/slide-3.jpg",
-            downloadLink: "https://www.mediafire.com/file/iw2wi7l5wm06ioa/Stellarium_%252B.apk/file"
+        {
+            name: "MediaFire",
+            url: "https://www.mediafire.com/file/m1qz3zzdsdpyt4i/WorldBox.apk/file",
+            icon: "fas fa-cloud-download-alt",
+            description: "Descarga directa"
         }
-	];
+    ],
+    // ... (otros servidores para diferentes proyectos)
+};
 
-    // Textos traducibles
-    const translations = {
-        en: {
-            "title": "BitForge",
-            "subtitle": "Access my projects and the latest releases",
-            "projects": "My Projects",
-            "social": "Social Media",
-            "download": "Download",
-            "view_projects": "View Projects"
-        },
-        es: {
-            "title": "BitForge",
-            "subtitle": "Accede a mis proyectos y los lanzamientos más recientes",
-            "projects": "Mis Proyectos",
-            "social": "Redes Sociales",
-            "download": "Descargar",
-            "view_projects": "Ver Proyectos"
-        },
-        ru: {
-            "title": "BitForge",
-            "subtitle": "Получите доступ к моим проектам и последним релизам",
-            "projects": "Мои Проекты",
-            "social": "Социальные сети",
-            "download": "Скачать",
-            "view_projects": "Просмотр Проектов"
-        },
-        pt: {
-            "title": "BitForge",
-            "subtitle": "Acesse meus projetos e os lançamentos mais recentes",
-            "projects": "Meus Projetos",
-            "social": "Redes Sociais",
-            "download": "Baixar",
-            "view_projects": "Ver Projetos"
+// Textos traducibles
+const translations = {
+    en: {
+        "title": "BitForge",
+        "subtitle": "Access my projects and the latest releases",
+        "projects": "My Projects",
+        "social": "Social Media",
+        "download": "Download",
+        "search_placeholder": "Search projects...",
+        "select_server": "Select download server",
+        "direct_download": "Direct Download",
+        "watch_movie": "Watch A Minecraft Movie",
+        "dark_mode": "Dark mode",
+        "light_mode": "Light mode",
+        "loading": "Loading...",
+        "error": "An error occurred",
+        "no_results": "No projects found",
+        "all_tags": "All"
+    },
+    es: {
+        "title": "BitForge",
+        "subtitle": "Accede a mis proyectos y los lanzamientos más recientes",
+        "projects": "Mis Proyectos",
+        "social": "Redes Sociales",
+        "download": "Descargar",
+        "search_placeholder": "Buscar proyectos...",
+        "select_server": "Selecciona servidor de descarga",
+        "direct_download": "Descarga directa",
+        "watch_movie": "Ver Una Película Minecraft",
+        "dark_mode": "Modo oscuro",
+        "light_mode": "Modo claro",
+        "loading": "Cargando...",
+        "error": "Ocurrió un error",
+        "no_results": "No se encontraron proyectos",
+        "all_tags": "Todos"
+    },
+    // ... (otros idiomas)
+};
+
+// Worker para búsquedas (simulado para este ejemplo)
+class SearchWorker {
+    constructor() {
+        this.cache = {};
+    }
+
+    search({ projects, query, activeTag, language }) {
+        const cacheKey = `${query}-${activeTag}-${language}`;
+        
+        if (this.cache[cacheKey]) {
+            return this.cache[cacheKey];
         }
-    };
 
-    // Elementos del DOM
-    const elements = {
-        themeToggle: document.getElementById('theme-toggle'),
-        themeIcon: document.querySelector('#theme-toggle i'),
-        languageSelector: document.getElementById('language-selector'),
-        projectsContainer: document.getElementById('projects-container'),
-        headerTitle: document.querySelector('header h1'),
-        headerSubtitle: document.querySelector('header p'),
-        projectsTitle: document.querySelector('#projects h2'),
-        socialTitle: document.querySelector('#social h2'),
-        navLinks: document.querySelectorAll('nav a')
-    };
+        const results = projects.filter(project => {
+            const title = project.title[language].toLowerCase();
+            const description = project.description[language].toLowerCase();
+            const matchesQuery = !query || 
+                              title.includes(query) || 
+                              description.includes(query);
+            const matchesTag = !activeTag || 
+                             project.tags.includes(activeTag.toLowerCase());
+            
+            return matchesQuery && matchesTag;
+        });
 
-    // Estado de la aplicación
-    const state = {
-        language: 'es',
-        darkMode: false
-    };
+        this.cache[cacheKey] = results;
+        return results;
+    }
+}
 
-    // Inicializar la aplicación
-    function init() {
+const searchWorker = new SearchWorker();
+
+// Función principal de inicialización
+async function init() {
+    try {
+        showLoading();
+        
+        // Cargar configuración
         loadSettings();
-        setupEventListeners();
-        render();
-    }
-
-    // Cargar configuración desde localStorage
-    function loadSettings() {
-        // Idioma
-        const savedLanguage = localStorage.getItem('language');
-        const browserLanguage = navigator.language.substring(0, 2);
         
-        if (savedLanguage && translations[savedLanguage]) {
-            state.language = savedLanguage;
-        } else if (translations[browserLanguage]) {
-            state.language = browserLanguage;
+        // Configurar eventos
+        setupEventListeners();
+        
+        // Precargar imágenes
+        await preloadImages();
+        
+        // Renderizar contenido inicial
+        render();
+        
+        // Ocultar carga después de un mínimo de 500ms para mejor UX
+        setTimeout(hideLoading, 500);
+        
+    } catch (error) {
+        console.error("Initialization error:", error);
+        showToast(translations[state.language].error, 'error');
+        hideLoading();
+    }
+}
+
+// Carga de configuración desde localStorage
+function loadSettings() {
+    // Tema
+    const savedTheme = localStorage.getItem(CONFIG.THEME_KEY);
+    state.darkMode = savedTheme === 'dark';
+    document.documentElement.setAttribute('data-theme', state.darkMode ? 'dark' : 'light');
+    updateThemeIcon();
+    
+    // Idioma
+    const savedLanguage = localStorage.getItem(CONFIG.LANGUAGE_KEY);
+    const browserLanguage = navigator.language.substring(0, 2);
+    
+    if (savedLanguage && translations[savedLanguage]) {
+        state.language = savedLanguage;
+    } else if (translations[browserLanguage]) {
+        state.language = browserLanguage;
+    }
+    
+    DOM.languageSelector.value = state.language;
+}
+
+// Configuración de event listeners
+function setupEventListeners() {
+    // Tema
+    DOM.themeToggle.addEventListener('click', toggleTheme);
+    
+    // Idioma
+    DOM.languageSelector.addEventListener('change', (e) => {
+        state.language = e.target.value;
+        localStorage.setItem(CONFIG.LANGUAGE_KEY, state.language);
+        render();
+    });
+    
+    // Búsqueda con debounce
+    DOM.searchInput.addEventListener('input', debounce(() => {
+        state.searchQuery = DOM.searchInput.value.toLowerCase();
+        renderProjects();
+    }, CONFIG.DEBOUNCE_DELAY));
+    
+    // Cerrar modales
+    document.querySelectorAll('.close-modal').forEach(btn => {
+        btn.addEventListener('click', () => {
+            DOM.downloadModal.style.display = 'none';
+            DOM.movieModal.style.display = 'none';
+        });
+    });
+    
+    // Cerrar modales al hacer clic fuera
+    window.addEventListener('click', (e) => {
+        if (e.target === DOM.downloadModal) {
+            DOM.downloadModal.style.display = 'none';
+        }
+        if (e.target === DOM.movieModal) {
+            DOM.movieModal.style.display = 'none';
+        }
+    });
+    
+    // Cerrar con ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            DOM.downloadModal.style.display = 'none';
+            DOM.movieModal.style.display = 'none';
+        }
+    });
+    
+    // Botón de película
+    DOM.movieBtn.addEventListener('click', () => {
+        DOM.movieModal.style.display = 'block';
+    });
+}
+
+// Función debounce para optimizar búsquedas
+function debounce(func, delay) {
+    let timeoutId;
+    return function() {
+        const context = this;
+        const args = arguments;
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => func.apply(context, args), delay);
+    };
+}
+
+// Cambiar tema
+function toggleTheme() {
+    state.darkMode = !state.darkMode;
+    localStorage.setItem(CONFIG.THEME_KEY, state.darkMode ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', state.darkMode ? 'dark' : 'light');
+    updateThemeIcon();
+}
+
+// Actualizar icono del tema
+function updateThemeIcon() {
+    DOM.themeIcon.className = state.darkMode ? 'fas fa-sun' : 'fas fa-moon';
+    DOM.themeToggle.setAttribute('title', 
+        state.darkMode ? translations[state.language].light_mode : 
+                         translations[state.language].dark_mode);
+}
+
+// Precargar imágenes
+function preloadImages() {
+    const promises = projects.map(project => {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.src = project.image;
+            img.onload = resolve;
+            img.onerror = reject;
+        });
+    });
+    
+    return Promise.all(promises);
+}
+
+// Renderizar toda la aplicación
+function render() {
+    updateTexts();
+    renderProjects();
+    renderTags();
+}
+
+// Actualizar textos traducidos
+function updateTexts() {
+    const t = translations[state.language];
+    
+    DOM.headerTitle.textContent = t.title;
+    DOM.headerSubtitle.textContent = t.subtitle;
+    DOM.projectsTitle.textContent = t.projects;
+    DOM.socialTitle.textContent = t.social;
+    DOM.searchInput.placeholder = t.search_placeholder;
+    DOM.movieBtn.innerHTML = `<i class="fas fa-film"></i> ${t.watch_movie}`;
+    
+    // Actualizar textos de navegación
+    DOM.navLinks[0].textContent = t.projects;
+    DOM.navLinks[1].textContent = t.social;
+}
+
+// Renderizar proyectos
+function renderProjects() {
+    try {
+        const filteredProjects = searchWorker.search({
+            projects,
+            query: state.searchQuery,
+            activeTag: state.activeTag,
+            language: state.language
+        });
+        
+        if (filteredProjects.length === 0) {
+            showNoResults();
+            return;
         }
         
-        elements.languageSelector.value = state.language;
-
-        // Tema oscuro
-        const savedTheme = localStorage.getItem('theme');
-        state.darkMode = savedTheme === 'dark';
-        document.documentElement.setAttribute('data-theme', state.darkMode ? 'dark' : 'light');
-    }
-
-    // Configurar event listeners
-    function setupEventListeners() {
-        // Selector de idioma
-        elements.languageSelector.addEventListener('change', (e) => {
-            state.language = e.target.value;
-            localStorage.setItem('language', state.language);
-            render();
-        });
-
-        // Botón de tema oscuro
-        elements.themeToggle.addEventListener('click', () => {
-            state.darkMode = !state.darkMode;
-            localStorage.setItem('theme', state.darkMode ? 'dark' : 'light');
-            document.documentElement.setAttribute('data-theme', state.darkMode ? 'dark' : 'light');
-            updateThemeIcon();
-        });
-
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', smoothScroll);
-        });
-    }
-
-    // Actualizar icono del tema
-    function updateThemeIcon() {
-        elements.themeIcon.className = state.darkMode ? 'fas fa-sun' : 'fas fa-moon';
-        elements.themeToggle.setAttribute('title', state.darkMode ? 'Modo claro' : 'Modo oscuro');
-    }
-
-    // Smooth scroll
-    function smoothScroll(e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href');
-        if (targetId === '#') return;
+        const fragment = document.createDocumentFragment();
         
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-            window.scrollTo({
-                top: targetElement.offsetTop - 80,
-                behavior: 'smooth'
+        filteredProjects.forEach(project => {
+            const card = createProjectCard(project);
+            fragment.appendChild(card);
+        });
+        
+        DOM.projectsContainer.innerHTML = '';
+        DOM.projectsContainer.appendChild(fragment);
+        setupDownloadButtons();
+        
+    } catch (error) {
+        console.error("Error rendering projects:", error);
+        showToast(translations[state.language].error, 'error');
+    }
+}
+
+// Mostrar mensaje cuando no hay resultados
+function showNoResults() {
+    DOM.projectsContainer.innerHTML = `
+        <div class="no-results">
+            <i class="fas fa-search"></i>
+            <p>${translations[state.language].no_results}</p>
+        </div>
+    `;
+}
+
+// Crear tarjeta de proyecto
+function createProjectCard(project) {
+    const card = document.createElement('div');
+    card.className = 'project-card';
+    card.setAttribute('role', 'listitem');
+    
+    card.innerHTML = `
+        <div class="project-image">
+            <img src="${project.image}" 
+                 alt="${project.title[state.language]}" 
+                 loading="lazy"
+                 onerror="this.src='fallback-image.jpg'">
+        </div>
+        <div class="project-info">
+            <h3>${project.title[state.language]}</h3>
+            <p>${project.description[state.language]}</p>
+            <button class="download-btn" 
+                    data-project="${project.title.en}" 
+                    aria-label="${translations[state.language].download} ${project.title[state.language]}">
+                ${translations[state.language].download}
+            </button>
+        </div>
+    `;
+    
+    return card;
+}
+
+// Configurar botones de descarga
+function setupDownloadButtons() {
+    document.querySelectorAll('.download-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const projectTitle = this.getAttribute('data-project');
+            showDownloadModal(projectTitle);
+        });
+    });
+}
+
+// Mostrar modal de descarga
+function showDownloadModal(projectTitle) {
+    try {
+        const modalTitle = document.getElementById('modal-title');
+        const optionsContainer = document.getElementById('download-options');
+        
+        modalTitle.textContent = `
+            ${translations[state.language].select_server}: 
+            ${projects.find(p => p.title.en === projectTitle)?.title[state.language] || projectTitle}
+        `;
+        
+        optionsContainer.innerHTML = '';
+        
+        const options = downloadServers[projectTitle] || [];
+        
+        if (options.length === 0) {
+            const project = projects.find(p => p.title.en === projectTitle);
+            if (project) {
+                addDownloadOption(optionsContainer, {
+                    name: translations[state.language].direct_download,
+                    url: project.downloadLink,
+                    icon: "fas fa-download",
+                    description: project.title[state.language]
+                });
+            }
+        } else {
+            options.forEach(option => {
+                addDownloadOption(optionsContainer, option);
             });
         }
-    }
-
-    // Renderizar toda la aplicación
-    function render() {
-        updateTexts();
-        renderProjects();
-        updateThemeIcon();
-    }
-
-    // Actualizar textos traducidos
-    function updateTexts() {
-        elements.headerTitle.textContent = translations[state.language].title;
-        elements.headerSubtitle.textContent = translations[state.language].subtitle;
-        elements.projectsTitle.textContent = translations[state.language].projects;
-        elements.socialTitle.textContent = translations[state.language].social;
         
-        // Actualizar enlaces de navegación
-        elements.navLinks[0].textContent = translations[state.language].projects;
-        elements.navLinks[1].textContent = translations[state.language].social;
-    }
-
-    // Renderizar proyectos
-    function renderProjects() {
-        elements.projectsContainer.innerHTML = '';
+        DOM.downloadModal.style.display = 'block';
         
-        projects.forEach(project => {
-            const projectCard = document.createElement('div');
-            projectCard.className = 'project-card';
-            
-            projectCard.innerHTML = `
-                <div class="project-image">
-                    <img src="${project.image}" alt="${project.title[state.language]}" loading="lazy">
-                </div>
-                <div class="project-info">
-                    <h3>${project.title[state.language]}</h3>
-                    <p>${project.description[state.language]}</p>
-                    <a href="${project.downloadLink}" class="download-btn" download>
-                        ${translations[state.language].download}
-                    </a>
-                </div>
-            `;
-            
-            elements.projectsContainer.appendChild(projectCard);
+    } catch (error) {
+        console.error("Error showing download modal:", error);
+        showToast(translations[state.language].error, 'error');
+    }
+}
+
+// Añadir opción de descarga al modal
+function addDownloadOption(container, option) {
+    const optionElement = document.createElement('a');
+    optionElement.href = option.url;
+    optionElement.target = '_blank';
+    optionElement.rel = 'noopener noreferrer';
+    optionElement.className = 'download-option';
+    optionElement.setAttribute('role', 'listitem');
+    
+    optionElement.innerHTML = `
+        <i class="${option.icon}" aria-hidden="true"></i>
+        <div class="option-info">
+            <h4>${option.name}</h4>
+            <p>${option.description}</p>
+        </div>
+        <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+    `;
+    
+    container.appendChild(optionElement);
+}
+
+// Renderizar tags
+function renderTags() {
+    try {
+        const tags = getAllTags();
+        const t = translations[state.language];
+        
+        DOM.tagContainer.innerHTML = '';
+        
+        // Añadir opción "Todos"
+        const allTag = document.createElement('span');
+        allTag.className = 'tag' + (!state.activeTag ? ' active' : '');
+        allTag.textContent = t.all_tags;
+        allTag.addEventListener('click', () => {
+            state.activeTag = null;
+            renderProjects();
+            document.querySelectorAll('.tag').forEach(t => t.classList.remove('active'));
+            allTag.classList.add('active');
         });
+        DOM.tagContainer.appendChild(allTag);
+        
+        // Añadir tags específicos
+        tags.forEach(tag => {
+            const tagElement = document.createElement('span');
+            tagElement.className = 'tag' + (state.activeTag === tag ? ' active' : '');
+            tagElement.textContent = tag;
+            tagElement.addEventListener('click', () => {
+                if (state.activeTag === tag) {
+                    state.activeTag = null;
+                    tagElement.classList.remove('active');
+                    allTag.classList.add('active');
+                } else {
+                    state.activeTag = tag;
+                    document.querySelectorAll('.tag').forEach(t => t.classList.remove('active'));
+                    tagElement.classList.add('active');
+                }
+                renderProjects();
+            });
+            DOM.tagContainer.appendChild(tagElement);
+        });
+        
+    } catch (error) {
+        console.error("Error rendering tags:", error);
     }
+}
 
-    // Iniciar
-    init();
+// Obtener todos los tags únicos
+function getAllTags() {
+    const tags = new Set();
+    
+    projects.forEach(project => {
+        project.tags?.forEach(tag => {
+            tags.add(tag);
+        });
+    });
+    
+    return Array.from(tags).sort();
+}
+
+// Mostrar notificación toast
+function showToast(message, type = 'info') {
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.setAttribute('role', 'alert');
+    
+    const icon = type === 'error' ? 'exclamation-circle' : 
+                type === 'success' ? 'check-circle' : 'info-circle';
+    
+    toast.innerHTML = `
+        <i class="fas fa-${icon}" aria-hidden="true"></i>
+        <span>${message}</span>
+    `;
+    
+    DOM.toastContainer.appendChild(toast);
+    
+    // Auto-eliminar después de 5 segundos
+    setTimeout(() => {
+        toast.classList.add('fade-out');
+        setTimeout(() => toast.remove(), 300);
+    }, 5000);
+}
+
+// Mostrar pantalla de carga
+function showLoading() {
+    DOM.loadingScreen.style.opacity = '1';
+    DOM.loadingScreen.style.visibility = 'visible';
+}
+
+// Ocultar pantalla de carga
+function hideLoading() {
+    DOM.loadingScreen.style.opacity = '0';
+    DOM.loadingScreen.style.visibility = 'hidden';
+}
+
+// Iniciar la aplicación cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', init);
+
+// Manejar errores no capturados
+window.addEventListener('error', (event) => {
+    console.error("Uncaught error:", event.error);
+    showToast(translations[state.language].error, 'error');
 });
