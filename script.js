@@ -161,6 +161,19 @@ const projects = [
         },
         image: "https://games-b26f.kxcdn.com/wp-content/uploads/2018/02/PapersPlease.jpg",
         downloadLink: "https://www.mediafire.com/file/jyymgpoic1dfebt/PapersPlease.rar/file"
+    },
+	{
+        id: 10,
+		title: {
+            en: "Universe Sandbox (PC)",
+            es: "Universe Sandbox (para PC)"
+        },
+        description: {
+            en: "Universe Sandbox 2 is a space and gravity simulator that lets you create and destroy anything in the universe. Experiment with physics, collisions, and climate in an intuitive and powerful way. It's great for learning about space or just having fun with cosmic destruction.",
+            es: "Universe Sandbox 2 es un simulador de espacio y gravedad que te permite crear y destruir cualquier cosa en el universo. Experimenta con la física, las colisiones y el clima de forma intuitiva y potente. Es ideal para aprender sobre el espacio o simplemente divertirte con la destrucción cósmica."
+        },
+        image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/230290/capsule_616x353.jpg?t=1742238758",
+        downloadLink: "https://www.mediafire.com/file/1azps9jvyaxo56u/Universe.Sandbox.2.rar/file"
     }
 ];
 
